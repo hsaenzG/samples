@@ -32,7 +32,7 @@ The user talks to an Express server that runs a Strands Agent per turn. The agen
 ## Prerequisites
 
 - Node.js **18.x** or later
-- AWS account with [Amazon Bedrock model access](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access-modify.html) for the configured model (default: `us.anthropic.claude-haiku-4-5-20251001-v1:0`)
+- AWS account with [Amazon Bedrock model access](https://docs.aws.amazon.com/bedrock/latest/userguide/model-access-modify.html) for the configured model (default: `us.amazon.nova-pro-v1:0`)
 - AWS credentials available via the default credential chain (environment variables, shared config/credentials file, SSO, or an IAM role)
 
 ## Setup
@@ -123,7 +123,7 @@ The first event is always a `session` event carrying the `sessionId`, and the st
 |-----------------------------|--------------------------------------------------|----------------------------------------------------|
 | `PORT`                      | `3000`                                           | HTTP port                                          |
 | `AWS_REGION`                | `us-east-1`                                      | Region for the Bedrock model                       |
-| `BEDROCK_MODEL_ID`          | `us.anthropic.claude-haiku-4-5-20251001-v1:0`    | Bedrock model id                                   |
+| `BEDROCK_MODEL_ID`          | `us.amazon.nova-pro-v1:0`                        | Bedrock model id                                   |
 | `MCP_SERVER_URL`            | `https://knowledge-mcp.global.api.aws`           | Streamable HTTP MCP server URL. Defaults to the AWS Knowledge MCP Server; set to empty to disable MCP |
 | `RATE_LIMIT_MAX_TOOL_CALLS` | `10`                                             | Max tool calls per session within the window       |
 | `RATE_LIMIT_WINDOW_MS`      | `60000`                                          | Rate-limit window in milliseconds                  |

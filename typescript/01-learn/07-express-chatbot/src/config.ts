@@ -33,7 +33,7 @@ export const config = {
     /** Bedrock model id used by the chatbot agent. */
     modelId:
       process.env.BEDROCK_MODEL_ID ??
-      "us.anthropic.claude-haiku-4-5-20251001-v1:0",
+      "us.amazon.nova-pro-v1:0",
   },
 
   mcp: {

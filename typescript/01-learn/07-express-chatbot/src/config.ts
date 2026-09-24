@@ -37,8 +37,14 @@ export const config = {
   },
 
   mcp: {
-    /** Streamable HTTP URL of an MCP server, or undefined to disable MCP. */
-    serverUrl: process.env.MCP_SERVER_URL || undefined,
+    /**
+     * Streamable HTTP URL of an MCP server. Defaults to the public, no-auth
+     * AWS Knowledge MCP Server. Set to '' (empty) to disable MCP.
+     */
+    serverUrl:
+      process.env.MCP_SERVER_URL === undefined
+        ? "https://knowledge-mcp.global.api.aws"
+        : process.env.MCP_SERVER_URL || undefined,
   },
 
   rateLimit: {

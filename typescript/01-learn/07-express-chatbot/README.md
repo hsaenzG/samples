@@ -1,6 +1,6 @@
 # Express chatbot with SSE streaming, Zod tools and MCP
 
-A Node.js + Express chatbot service built on the Strands Agents TypeScript SDK. It exposes a streaming chat API over Server-Sent Events (SSE), defines its tools with Zod, keeps per-session conversation history, can load extra tools from an MCP server, and applies interventions for rate limiting and content moderation.
+A Node.js + Express chatbot service built on the Strands Agents TypeScript SDK. It exposes a streaming chat API over Server-Sent Events (SSE), defines its tools with Zod, keeps per-session conversation history, loads extra tools from a remote MCP server (the public AWS Knowledge MCP Server by default), and applies interventions for rate limiting and content moderation.
 
 ## Overview
 
@@ -9,18 +9,24 @@ A Node.js + Express chatbot service built on the Strands Agents TypeScript SDK. 
 | **Agent Architecture** | Single-agent                                                            |
 | **Native Tools**       | None                                                                    |
 | **Custom Tools**       | `get_current_time`, `calculate`, `get_weather` (Zod input schemas)      |
-| **MCP Servers**        | Optional — any Streamable HTTP MCP server via `MCP_SERVER_URL`          |
+| **MCP Servers**        | [AWS Knowledge MCP Server](https://knowledge-mcp.global.api.aws) (default; public, no auth) — configurable via `MCP_SERVER_URL` |
 | **Use Case Vertical**  | General-purpose / developer starter                                     |
 | **Complexity**         | Intermediate                                                            |
 | **Model Provider**     | Amazon Bedrock                                                          |
 | **SDK Used**           | Strands Agents TypeScript SDK                                           |
+
+### Architecture
+
+![Architecture Diagram](./images/architecture.png)
+
+The user talks to an Express server that runs a Strands Agent per turn. The agent applies a moderation intervention before each model call and a rate-limit intervention before each tool call, calls the local Zod tools (plus the tools loaded from a remote MCP server at startup), and invokes Amazon Bedrock for inference. By default the MCP client connects to the public **AWS Knowledge MCP Server**, so the agent can search and read up-to-date AWS documentation. Conversation history is persisted per session and replayed on the next turn. Responses are returned as JSON (`/chat`) or streamed as Server-Sent Events (`/chat/stream`).
 
 ### Key Features
 
 - **SSE streaming with event ids** — `POST /chat/stream` forwards every agent event as its own SSE message with an incrementing `id:` line, so clients can track position and reconnect with `Last-Event-ID`.
 - **Zod tools** — three custom tools whose inputs are validated by Zod schemas before the callback runs.
 - **Session store** — an in-memory store keeps per-session conversation history, replayed into the agent on every turn so the chatbot is stateful.
-- **MCP client** — optionally connects to an MCP server at startup and loads its tools alongside the local ones.
+- **MCP client** — connects to a remote MCP server at startup and loads its tools alongside the local ones. Defaults to the public [AWS Knowledge MCP Server](https://knowledge-mcp.global.api.aws) (no credentials required), which exposes tools to search and read official AWS documentation.
 - **Interventions** — a rate-limit intervention caps tool calls per session, and a moderation intervention blocks configured terms before the model is called.
 
 ## Prerequisites
@@ -95,6 +101,7 @@ The first event is always a `session` event carrying the `sessionId`, and the st
 - "What time is it in `America/New_York`?"
 - "Calculate 128 divided by 4."
 - "What's the current weather at latitude 51.5, longitude -0.12?"
+- "Search the AWS docs for how Amazon Bedrock model access works." *(uses the AWS Knowledge MCP tools)*
 
 ## Project Structure
 
@@ -117,7 +124,7 @@ The first event is always a `session` event carrying the `sessionId`, and the st
 | `PORT`                      | `3000`                                           | HTTP port                                          |
 | `AWS_REGION`                | `us-east-1`                                      | Region for the Bedrock model                       |
 | `BEDROCK_MODEL_ID`          | `us.anthropic.claude-haiku-4-5-20251001-v1:0`    | Bedrock model id                                   |
-| `MCP_SERVER_URL`            | *(empty)*                                        | Streamable HTTP MCP server URL (optional)          |
+| `MCP_SERVER_URL`            | `https://knowledge-mcp.global.api.aws`           | Streamable HTTP MCP server URL. Defaults to the AWS Knowledge MCP Server; set to empty to disable MCP |
 | `RATE_LIMIT_MAX_TOOL_CALLS` | `10`                                             | Max tool calls per session within the window       |
 | `RATE_LIMIT_WINDOW_MS`      | `60000`                                          | Rate-limit window in milliseconds                  |
 | `MODERATION_BLOCKED_TERMS`  | *(empty)*                                        | Comma-separated blocked terms (case-insensitive)   |
@@ -150,6 +157,7 @@ npm run typecheck
 - [Strands Agents Documentation](https://strandsagents.com/)
 - [TypeScript API Reference](https://strandsagents.com/latest/documentation/docs/api-reference/typescript/agent/agent/)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
+- [AWS Knowledge MCP Server](https://knowledge-mcp.global.api.aws)
 - [Server-Sent Events (MDN)](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events)
 
 ## Disclaimer

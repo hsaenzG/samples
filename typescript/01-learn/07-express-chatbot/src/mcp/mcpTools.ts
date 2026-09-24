@@ -1,12 +1,16 @@
 /**
  * Optional MCP (Model Context Protocol) integration.
  *
- * When `MCP_SERVER_URL` is configured, the server connects to that MCP server
- * over Streamable HTTP at startup and loads its tools so the agent can call
- * them alongside the local Zod tools. When no URL is set, MCP is skipped and
- * the chatbot runs with local tools only.
+ * The chatbot connects to an existing, remote MCP server over Streamable HTTP
+ * at startup and loads its tools so the agent can call them alongside the
+ * local Zod tools. By default `MCP_SERVER_URL` points at the public
+ * AWS Knowledge MCP Server (`https://knowledge-mcp.global.api.aws`), a fully
+ * managed, no-auth server that exposes up-to-date AWS documentation, code
+ * samples, and official content as tools (e.g. search/read AWS docs). Set the
+ * variable to any other Streamable HTTP MCP server, or leave it empty to run
+ * with local tools only.
  *
- * `continueOnError: true` keeps the server usable even if the MCP server is
+ * `continueOnError: true` keeps the chatbot usable even if the MCP server is
  * unreachable — a failed connection yields an empty tool list instead of
  * crashing the process.
  */

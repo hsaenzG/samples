@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 560" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#111"/>
+    </marker>
+    <g id="user" fill="none" stroke="#111" stroke-width="3">
+      <circle cx="26" cy="18" r="11"/>
+      <path d="M6 54 c0-16 40-16 40 0" stroke-linecap="round"/>
+    </g>
+  </defs>
+
+  <rect width="1240" height="560" fill="#ffffff"/>
+  <text x="24" y="34" font-size="19" font-weight="700" fill="#111">Express + Strands chatbot — SSE streaming, Zod tools, MCP &amp; interventions</text>
+
+  <!-- User -->
+  <use href="#user" x="24" y="230"/>
+  <text x="34" y="320" font-size="18" fill="#111">User</text>
+  <line x1="80" y1="258" x2="300" y2="258" stroke="#111" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="92" y="248" font-size="14" fill="#111">POST /chat · /chat/stream</text>
+  <line x1="300" y1="298" x2="80" y2="298" stroke="#111" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="92" y="318" font-size="14" fill="#111">JSON reply · SSE events</text>
+
+  <!-- Express service boundary -->
+  <rect x="300" y="70" width="500" height="450" fill="none" stroke="#111" stroke-width="2"/>
+  <rect x="300" y="70" width="46" height="46" fill="#111"/>
+  <text x="316" y="100" font-size="22" font-weight="700" fill="#fff">E</text>
+  <text x="356" y="100" font-size="18" font-weight="700" fill="#111">Express server (Node.js)</text>
+
+  <!-- Routes -->
+  <rect x="326" y="140" width="196" height="120" fill="none" stroke="#111" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="342" y="164" font-size="14" font-weight="700" fill="#111">Routes</text>
+  <text x="342" y="190" font-size="13" fill="#555">GET  /health</text>
+  <text x="342" y="212" font-size="13" fill="#555">POST /chat</text>
+  <text x="342" y="234" font-size="13" fill="#555">POST /chat/stream</text>
+  <text x="342" y="252" font-size="11.5" fill="#888">SSE: id · event · data</text>
+
+  <!-- Session store -->
+  <rect x="326" y="300" width="196" height="90" fill="none" stroke="#111" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="342" y="324" font-size="14" font-weight="700" fill="#111">Session store</text>
+  <text x="342" y="348" font-size="12.5" fill="#555">in-memory history</text>
+  <text x="342" y="368" font-size="12.5" fill="#555">per-session · tool metering</text>
+
+  <!-- Strands Agent -->
+  <rect x="552" y="140" width="230" height="250" fill="none" stroke="#111" stroke-width="1.8"/>
+  <text x="568" y="166" font-size="16" font-weight="700" fill="#111">Strands Agent</text>
+  <text x="568" y="188" font-size="12.5" fill="#555">agent loop · streaming</text>
+
+  <!-- Interventions -->
+  <rect x="572" y="210" width="192" height="76" fill="none" stroke="#111" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="586" y="232" font-size="13" font-weight="700" fill="#111">Interventions</text>
+  <text x="586" y="254" font-size="12" fill="#555">moderation (beforeModelCall)</text>
+  <text x="586" y="272" font-size="12" fill="#555">rate limit (beforeToolCall)</text>
+
+  <!-- Tools -->
+  <rect x="572" y="300" width="192" height="76" fill="none" stroke="#111" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="586" y="322" font-size="13" font-weight="700" fill="#111">Tools (Zod schemas)</text>
+  <text x="586" y="344" font-size="12" fill="#555">get_current_time · calculate</text>
+  <text x="586" y="362" font-size="12" fill="#555">get_weather</text>
+
+  <!-- Route -> Agent arrow (straight, horizontal) -->
+  <line x1="522" y1="200" x2="552" y2="200" stroke="#111" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <!-- Agent -> session store (persist history) -->
+  <line x1="552" y1="345" x2="522" y2="345" stroke="#111" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow)"/>
+  <text x="537" y="337" font-size="11" fill="#888" text-anchor="middle">save</text>
+
+  <!-- ==== External systems, right column ==== -->
+
+  <!-- AWS Knowledge MCP Server -->
+  <text x="1035" y="150" font-size="12.5" font-weight="700" fill="#111" text-anchor="middle">MCP server (MCP_SERVER_URL)</text>
+  <rect x="890" y="165" width="290" height="120" fill="none" stroke="#111" stroke-width="2"/>
+  <rect x="890" y="165" width="46" height="46" fill="#232f3e"/>
+  <text x="906" y="195" font-size="13" font-weight="700" fill="#ff9900" text-anchor="middle">aws</text>
+  <text x="946" y="192" font-size="15" font-weight="700" fill="#111">AWS Knowledge MCP</text>
+  <text x="910" y="230" font-size="12.5" fill="#555">knowledge-mcp.global.api.aws</text>
+  <text x="910" y="252" font-size="12.5" fill="#555">search / read AWS docs · no auth</text>
+
+  <!-- Tools -> MCP: straight horizontal from the Tools box right edge -->
+  <line x1="800" y1="338" x2="890" y2="230" stroke="#111" stroke-width="2.2" stroke-dasharray="8 6" marker-end="url(#arrow)"/>
+  <text x="843" y="270" font-size="11.5" fill="#111" text-anchor="middle">listTools()</text>
+
+  <!-- Amazon Bedrock (model provider) -->
+  <text x="1035" y="345" font-size="12.5" font-weight="700" fill="#111" text-anchor="middle">Model provider</text>
+  <rect x="890" y="360" width="290" height="120" fill="none" stroke="#111" stroke-width="2"/>
+  <rect x="890" y="360" width="46" height="46" fill="#232f3e"/>
+  <text x="906" y="390" font-size="13" font-weight="700" fill="#ff9900" text-anchor="middle">aws</text>
+  <text x="946" y="387" font-size="15" font-weight="700" fill="#111">Amazon Bedrock</text>
+  <text x="910" y="425" font-size="13" fill="#555">Claude Haiku 4.5</text>
+  <text x="910" y="447" font-size="12" fill="#555">BEDROCK_MODEL_ID · AWS_REGION</text>
+
+  <!-- Agent -> Bedrock: straight horizontal from Express right edge -->
+  <line x1="800" y1="420" x2="890" y2="420" stroke="#111" stroke-width="2.2" stroke-dasharray="8 6" marker-end="url(#arrow)"/>
+  <text x="845" y="412" font-size="11.5" fill="#111" text-anchor="middle">invoke model</text>
+
+  <!-- footer legend -->
+  <text x="24" y="545" font-size="12" fill="#888">Solid arrows: request/response flow · Dashed arrows: model &amp; tool calls / persistence</text>
+</svg>

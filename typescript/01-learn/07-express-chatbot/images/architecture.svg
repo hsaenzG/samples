@@ -74,9 +74,9 @@
   <text x="910" y="230" font-size="12.5" fill="#555">knowledge-mcp.global.api.aws</text>
   <text x="910" y="252" font-size="12.5" fill="#555">search / read AWS docs · no auth</text>
 
-  <!-- Tools -> MCP: straight horizontal from the Tools box right edge -->
-  <line x1="800" y1="338" x2="890" y2="230" stroke="#111" stroke-width="2.2" stroke-dasharray="8 6" marker-end="url(#arrow)"/>
-  <text x="843" y="270" font-size="11.5" fill="#111" text-anchor="middle">listTools()</text>
+  <!-- Tools -> MCP: starts at the right edge of the Tools box -->
+  <line x1="764" y1="338" x2="890" y2="225" stroke="#111" stroke-width="2.2" stroke-dasharray="8 6" marker-end="url(#arrow)"/>
+  <text x="838" y="268" font-size="11.5" fill="#111" text-anchor="middle">listTools()</text>
 
   <!-- Amazon Bedrock (model provider) -->
   <text x="1035" y="345" font-size="12.5" font-weight="700" fill="#111" text-anchor="middle">Model provider</text>
@@ -87,9 +87,9 @@
   <text x="910" y="425" font-size="13" fill="#555">Claude Haiku 4.5</text>
   <text x="910" y="447" font-size="12" fill="#555">BEDROCK_MODEL_ID · AWS_REGION</text>
 
-  <!-- Agent -> Bedrock: straight horizontal from Express right edge -->
-  <line x1="800" y1="420" x2="890" y2="420" stroke="#111" stroke-width="2.2" stroke-dasharray="8 6" marker-end="url(#arrow)"/>
-  <text x="845" y="412" font-size="11.5" fill="#111" text-anchor="middle">invoke model</text>
+  <!-- Strands Agent -> Bedrock: starts at the right edge of the Agent box -->
+  <line x1="782" y1="200" x2="890" y2="420" stroke="#111" stroke-width="2.2" stroke-dasharray="8 6" marker-end="url(#arrow)"/>
+  <text x="852" y="300" font-size="11.5" fill="#111" text-anchor="middle">invoke model</text>
 
   <!-- footer legend -->
   <text x="24" y="545" font-size="12" fill="#888">Solid arrows: request/response flow · Dashed arrows: model &amp; tool calls / persistence</text>
